@@ -100,8 +100,29 @@ function Validator (formSelector){
             input.onblur = handerValidate ;
             //!lắng nghe sự kiện nhập vào
             input.oninput = clearErrorStatus ;
-
+            
         }
+        //!lắng nghe sự kiện bỏ ẩn password
+        const hasShowBtns = formElement.querySelectorAll(".hasShowBtn");
+        if(hasShowBtns){
+            for(hasShowBtn of hasShowBtns){
+                    const passField = hasShowBtn.querySelector("input[btn=showHide]");
+                    const showBtn = hasShowBtn.querySelector(".show-btn i");
+                    if(showBtn){
+                         showBtn.onclick = () => {
+                             if (passField.type === "password") {
+                                 passField.type = "text";
+                                 showBtn.classList.add("hide-btn");
+                            } else {
+                                 passField.type = "password";
+                                 showBtn.classList.remove("hide-btn");
+                            }
+                        };
+                            
+                    }
+            }
+        }
+
 
         //render trạng thái lỗi ra
         function handerValidate (e){
@@ -158,7 +179,6 @@ function Validator (formSelector){
                             case 'checkbox':
                                 //chỉ lấy của ô được check
                                 if(!input.matches(':checked')) {
-                                //     // values[input.name] = ''; // chuỗi rỗng khi không check
                                     return values;
                                 }
 
@@ -200,3 +220,4 @@ function postDatabase(data) {
         return response.json();
       });
   }
+  

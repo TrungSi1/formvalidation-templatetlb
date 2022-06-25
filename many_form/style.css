@@ -132,3 +132,29 @@ html {
 .spacer {
   margin-top: 36px;
 }
+
+/* btn show password */
+.form-group.hasShowBtn {
+  position: relative;
+}
+.form-group .show-btn {
+  position: absolute;
+  right: 15px;
+  top: 45px;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: rgba(51, 51, 51, 0.733);
+  cursor: pointer;
+  /* display: none; nếu muốn khi nhập vô thì mới hiện 
+  thì none ở đây và xuống dưới hiện khi được nhập
+  chú ý trường hợp này phải dùng rule mặc định của trình duyệt là required
+  ghi required như một attribute của thẻ đó là được*/
+}
+/* khi thẻ input đươc nhập */
+/* .form-group input:valid ~ .show-btn {
+  display: block;
+} */
+/* biến icon thành eyes có gạch */
+.form-group .show-btn i.hide-btn::before {
+  content: "\f070";
+}

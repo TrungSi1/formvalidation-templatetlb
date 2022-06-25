@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <title>CodePen - [Javascript base] Form validation - HTML template</title>
     <link rel="stylesheet" href="./style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
   </head>
   <body>
     <!-- partial:index.partial.html -->
@@ -62,21 +66,25 @@
         </div>
 
         <!-- Mật Khẩu -->
-        <div class="form-group">
+        <div class="form-group hasShowBtn">
           <label for="password" class="form-label">Mật khẩu</label>
+
           <input
             id="password"
             name="password"
+            btn="showHide"
             rules="required|min:6"
             type="password"
             placeholder="Nhập mật khẩu"
             class="form-control"
           />
+          <span class="show-btn"><i class="fas fa-eye"></i></span>
+
           <span class="form-message"></span>
         </div>
 
         <!-- Xác nhận mật khẩu -->
-        <div class="form-group">
+        <div class="form-group hasShowBtn">
           <label for="password_confirmation" class="form-label"
             >Nhập lại mật khẩu</label
           >
@@ -84,10 +92,12 @@
             id="password_confirmation"
             name="password_confirmation"
             rules="required|confirm"
+            btn="showHide"
             placeholder="Nhập lại mật khẩu"
             type="password"
             class="form-control"
           />
+          <span class="show-btn"><i class="fas fa-eye"></i></span>
           <span class="form-message"></span>
         </div>
 
@@ -163,30 +173,38 @@
           />
           <span class="form-message"></span>
         </div>
-        <div class="form-group">
+        <div class="form-group hasShowBtn">
           <label for="password" class="form-label">Mật khẩu</label>
+          <!-- trong thẻ input có attribue required đó là lấy rule mặc định google -->
           <input
             id="password"
             name="password"
+            btn="showHide"
             rules="required|min:6"
             type="password"
             placeholder="Nhập mật khẩu"
+            required
             class="form-control"
           />
+          <span class="show-btn"><i class="fas fa-eye"></i></span>
           <span class="form-message"></span>
         </div>
         <button class="form-submit">Đăng nhập</button>
       </form>
     </div>
+
     <!-- partial -->
     <script src="./validationForm.js"></script>
+
     <script>
+      //---------------------------------------------------
       form = new Validator("#register-form");
-      form.onSubmit = (data) => postDatabase(data); // post Database
-      // form.onSubmit = (data) => console.log(data);
+      // form.onSubmit = (data) => postDatabase(data); // post Database
+      form.onSubmit = (data) => console.log(data);
       //!------------------------------
       form2 = new Validator("#login-form");
       form2.onSubmit = (data) => console.log(data);
+      //------------------------------
     </script>
   </body>
 </html>
