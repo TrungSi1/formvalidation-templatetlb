@@ -1,6 +1,6 @@
 //! phải xây dựng form theo đúng format
 
-function Validator (formSelector, options={}){
+function Validator (formSelector){
     //khai báo 1 object chứa các rule 
     const formRules = {}; 
     //tạo ra các rule
@@ -22,6 +22,10 @@ function Validator (formSelector, options={}){
            return function(value){
                 return value.length >= min ? undefined : `Vui lòng nhập tối thiểu ${min} kí tự`;
             }
+        },
+        confirm: function(value){
+            const getPassword = formElement.querySelector("#password").value;
+            return getPassword === value ? undefined : "Nội dung nhập lại không đúng"
         },
       
     };
@@ -90,11 +94,14 @@ function Validator (formSelector, options={}){
                     formRules[input.name] = [ruleFunc]
                 };
             }
+          
             //!lắng nghe các sự kiện như bler, onchange, .....
             input.onblur = handerValidate ;
+            //!lắng nghe sự kiện nhập vào
             input.oninput = clearErrorStatus ;
 
         }
+        console.log(formRules)
 
         //render trạng thái lỗi ra
         function handerValidate (e){
@@ -137,38 +144,38 @@ function Validator (formSelector, options={}){
                }
             }
             if(isvalid){
-                 if(typeof options.onSubmit === "function"){
-                     // lấy các thẻ input có attribute là name và không có disable
-                 const enableInputs = formElement.querySelectorAll('[name]:not([disable])')
-                 //query All sẽ cho ra một Nodelist nên cần chuyển về array
-                 //dùng reduce để tạo object mới có các key là name và item là value của các thẻ input được lọc qua
-                 const formValues = Array.from(enableInputs).reduce(function(values, input){
-                     switch(input.type){
-                         case 'radio':
-                             //key là input.name và item là value của ratio inut được check
-                             // values[input.name] = document.querySelector('input[name="'+input.name+'"]:checked').value;
-                             break;
-                         case 'checkbox':
-                             //chỉ lấy của ô được check
-                             // if(!input.matches(':checked')) {
-                             //     // values[input.name] = ''; // chuỗi rỗng khi không check
-                             //     return values;
-                             // }
+                if(typeof this.onSubmit === "function"){
+                        // lấy các thẻ input có attribute là name và không có disable
+                        const enableInputs = formElement.querySelectorAll('[name]:not([disable])')
+                        //query All sẽ cho ra một Nodelist nên cần chuyển về array
+                        //dùng reduce để tạo object mới có các key là name và item là value của các thẻ input được lọc qua
+                        const formValues = Array.from(enableInputs).reduce(function(values, input){
+                        switch(input.type){
+                            case 'radio':
+                                //key là input.name và item là value của ratio inut được check
+                                values[input.name] = document.querySelector('input[name="'+input.name+'"]:checked').value;
+                                break;
+                            case 'checkbox':
+                                //chỉ lấy của ô được check
+                                if(!input.matches(':checked')) {
+                                //     // values[input.name] = ''; // chuỗi rỗng khi không check
+                                    return values;
+                                }
 
-                             // if(!Array.isArray(values[input.name])){
-                             //     values[input.name] = []; //gán value thành mảng
-                             // }
-                             // values[input.name].push(input.value); 
-                             break;
-                         case 'file':
-                             // values[input.name] = input.files;
-                             break;
-                         default:
-                             values[input.name] =input.value;
-                      }
-                         return  values;
-                     }, {} );   
-                     options.onSubmit(formValues);
+                                if(!Array.isArray(values[input.name])){
+                                    values[input.name] = []; //gán value thành mảng
+                                }
+                                values[input.name].push(input.value); 
+                                break;
+                            case 'file':
+                                values[input.name] = input.files;
+                                break;
+                            default:
+                                values[input.name] =input.value;
+                        }
+                            return  values;
+                    }, {} );   
+                     this.onSubmit(formValues);
                  }else
                  {
                      formElement.submit();
