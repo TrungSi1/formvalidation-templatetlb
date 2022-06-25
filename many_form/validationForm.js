@@ -1,6 +1,7 @@
 //! phải xây dựng form theo đúng format
 
 function Validator (formSelector){
+
     //khai báo 1 object chứa các rule 
     const formRules = {}; 
     //tạo ra các rule
@@ -101,7 +102,6 @@ function Validator (formSelector){
             input.oninput = clearErrorStatus ;
 
         }
-        console.log(formRules)
 
         //render trạng thái lỗi ra
         function handerValidate (e){
@@ -184,3 +184,19 @@ function Validator (formSelector){
         }
     }
 }
+//!-------------------------------------------------------------------------------------------------------
+// Hàm để post data đăng kí xuống cho Database
+function postDatabase(data) {
+    const courseAPI = "http://localhost:3000/databaseRegister";
+    var options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+    fetch(courseAPI, options) //! options là lựa chọn phương thức: ở đây đang chọn post
+      .then(function (response) {
+        return response.json();
+      });
+  }
